@@ -1,5 +1,5 @@
-'use client';
-import { vars } from 'nativewind';
+'use client'
+import { vars } from 'nativewind'
 
 export const config = {
   light: vars({
@@ -44,33 +44,27 @@ export const config = {
     '--color-tertiary-900': '108 61 19',
     '--color-tertiary-950': '84 49 18',
 
-    /* Error */
-    '--color-error-0': '254 233 233',
-    '--color-error-50': '254 226 226',
-    '--color-error-100': '254 202 202',
-    '--color-error-200': '252 165 165',
-    '--color-error-300': '248 113 113',
-    '--color-error-400': '239 68 68',
-    '--color-error-500': '230 53 53',
-    '--color-error-600': '220 38 38',
-    '--color-error-700': '185 28 28',
-    '--color-error-800': '153 27 27',
-    '--color-error-900': '127 29 29',
-    '--color-error-950': '83 19 19',
+    /* Danger */
+    '--color-danger': '#DC3545',
 
     /* Success */
-    '--color-success-0': '228 255 244',
-    '--color-success-50': '202 255 232',
-    '--color-success-100': '162 241 192',
-    '--color-success-200': '132 211 162',
-    '--color-success-300': '102 181 132',
-    '--color-success-400': '72 151 102',
-    '--color-success-500': '52 131 82',
-    '--color-success-600': '42 121 72',
-    '--color-success-700': '32 111 62',
-    '--color-success-800': '22 101 52',
-    '--color-success-900': '20 83 45',
-    '--color-success-950': '27 50 36',
+    '--color-success': '#28A745',
+
+    /* updated gray values */
+    '--color-gray-100': '#ADADAD',
+    '--color-gray-200': '#949494',
+    '--color-gray-300': '#666666',
+    '--color-gray-400': '#3D3D3D',
+    '--color-gray-500': '#1D1D1D',
+
+    /* Custom new blue colors */
+    '--color-blue-light': '#D7EFF9',
+    '--color-blue-base': '#5EC5FD',
+    '--color-blue-dark': '#009CF0',
+
+    /* Custom new orange colors */
+    '--color-orange-base': '#F24D0D',
+    '--color-orange-dark': '#C43C08',
 
     /* Warning */
     '--color-warning-0': '255 249 245',
@@ -306,4 +300,4 @@ export const config = {
     '--color-indicator-info': '161 199 245',
     '--color-indicator-error': '232 70 69',
   }),
-};
+}

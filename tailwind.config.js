@@ -1,9 +1,9 @@
-import gluestackPlugin from '@gluestack-ui/nativewind-utils/tailwind-plugin';
+import gluestackPlugin from '@gluestack-ui/nativewind-utils/tailwind-plugin'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "media",
-  content: ["app/**/*.{tsx,jsx,ts,js}", "components/**/*.{tsx,jsx,ts,js}"],
+  darkMode: 'media',
+  content: ['app/**/*.{tsx,jsx,ts,js}', 'components/**/*.{tsx,jsx,ts,js}'],
   presets: [require('nativewind/preset')],
   safelist: [
     {
@@ -55,34 +55,8 @@ module.exports = {
           900: 'rgb(var(--color-tertiary-900)/<alpha-value>)',
           950: 'rgb(var(--color-tertiary-950)/<alpha-value>)',
         },
-        error: {
-          0: 'rgb(var(--color-error-0)/<alpha-value>)',
-          50: 'rgb(var(--color-error-50)/<alpha-value>)',
-          100: 'rgb(var(--color-error-100)/<alpha-value>)',
-          200: 'rgb(var(--color-error-200)/<alpha-value>)',
-          300: 'rgb(var(--color-error-300)/<alpha-value>)',
-          400: 'rgb(var(--color-error-400)/<alpha-value>)',
-          500: 'rgb(var(--color-error-500)/<alpha-value>)',
-          600: 'rgb(var(--color-error-600)/<alpha-value>)',
-          700: 'rgb(var(--color-error-700)/<alpha-value>)',
-          800: 'rgb(var(--color-error-800)/<alpha-value>)',
-          900: 'rgb(var(--color-error-900)/<alpha-value>)',
-          950: 'rgb(var(--color-error-950)/<alpha-value>)',
-        },
-        success: {
-          0: 'rgb(var(--color-success-0)/<alpha-value>)',
-          50: 'rgb(var(--color-success-50)/<alpha-value>)',
-          100: 'rgb(var(--color-success-100)/<alpha-value>)',
-          200: 'rgb(var(--color-success-200)/<alpha-value>)',
-          300: 'rgb(var(--color-success-300)/<alpha-value>)',
-          400: 'rgb(var(--color-success-400)/<alpha-value>)',
-          500: 'rgb(var(--color-success-500)/<alpha-value>)',
-          600: 'rgb(var(--color-success-600)/<alpha-value>)',
-          700: 'rgb(var(--color-success-700)/<alpha-value>)',
-          800: 'rgb(var(--color-success-800)/<alpha-value>)',
-          900: 'rgb(var(--color-success-900)/<alpha-value>)',
-          950: 'rgb(var(--color-success-950)/<alpha-value>)',
-        },
+        danger: 'var(--color-danger)',
+        success: 'var(--color-success)',
         warning: {
           0: 'rgb(var(--color-warning-0)/<alpha-value>)',
           50: 'rgb(var(--color-warning-50)/<alpha-value>)',
@@ -168,12 +142,29 @@ module.exports = {
           info: 'rgb(var(--color-indicator-info)/<alpha-value>)',
           error: 'rgb(var(--color-indicator-error)/<alpha-value>)',
         },
+        gray: {
+          100: 'var(--color-gray-100)',
+          200: 'var(--color-gray-200)',
+          300: 'var(--color-gray-300)',
+          400: 'var(--color-gray-400)',
+          500: 'var(--color-gray-500)',
+        },
+        blue: {
+          light: 'var(--color-blue-light)',
+          base: 'var(--color-blue-base)',
+          dark: 'var(--color-blue-dark)',
+        },
+        orange: {
+          base: 'var(--color-orange-base)',
+          dark: 'var(--color-orange-dark)',
+        },
       },
       fontFamily: {
         heading: undefined,
         body: undefined,
         mono: undefined,
-        roboto: ['Roboto', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        'dm-sans': ['DM Sans', 'sans-serif'],
       },
       fontWeight: {
         extrablack: '950',
@@ -195,4 +186,4 @@ module.exports = {
     },
   },
   plugins: [gluestackPlugin],
-};
+}
