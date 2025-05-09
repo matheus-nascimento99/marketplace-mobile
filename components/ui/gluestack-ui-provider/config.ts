@@ -50,6 +50,9 @@ export const config = {
     /* Success */
     '--color-success': '#28A745',
 
+    /* Shape */
+    '--color-shape': '#F5EAEA',
+
     /* updated gray values */
     '--color-gray-100': '#ADADAD',
     '--color-gray-200': '#949494',

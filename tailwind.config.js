@@ -57,6 +57,7 @@ module.exports = {
         },
         danger: 'var(--color-danger)',
         success: 'var(--color-success)',
+        shape: 'var(--color-shape)',
         warning: {
           0: 'rgb(var(--color-warning-0)/<alpha-value>)',
           50: 'rgb(var(--color-warning-50)/<alpha-value>)',
@@ -160,17 +161,36 @@ module.exports = {
         },
       },
       fontFamily: {
-        heading: undefined,
-        body: undefined,
-        mono: undefined,
-        poppins: ['Poppins', 'sans-serif'],
-        'dm-sans': ['DM Sans', 'sans-serif'],
+        heading: ['DMSans-Bold', 'ui-sans-serif', 'system-ui'],
+        body: ['Poppins-Regular', 'ui-sans-serif', 'system-ui'],
+        label: ['Poppins-Medium', 'ui-sans-serif', 'system-ui'],
       },
       fontWeight: {
         extrablack: '950',
       },
+      lineHeight: {
+        tight: 1.2,
+        snug: 1.4,
+      },
       fontSize: {
-        '2xs': '10px',
+        /* heading font size */
+        'heading-lg': '24px',
+        'heading-md': '20px',
+        'heading-sm': '16px',
+        'heading-xs': '14px',
+
+        /* body font size */
+        'body-md': '16px',
+        'body-sm': '14px',
+        'body-xs': '12px',
+
+        /* label font size */
+        'label-md': '12px',
+        'label-sm': '10px',
+
+        /* action font size */
+        'action-md': '16px',
+        'action-sm': '14px',
       },
       boxShadow: {
         'hard-1': '-2px 2px 8px 0px rgba(38, 38, 38, 0.20)',
@@ -182,6 +202,19 @@ module.exports = {
         'soft-2': '0px 0px 20px rgba(38, 38, 38, 0.2)',
         'soft-3': '0px 0px 30px rgba(38, 38, 38, 0.1)',
         'soft-4': '0px 0px 40px rgba(38, 38, 38, 0.1)',
+      },
+      borderRadius: {
+        card: '10px',
+      },
+      padding: {
+        2.2: '10px',
+      },
+      margin: {
+        8.5: '34px',
+        15: '60px',
+      },
+      size: {
+        30: '120px',
       },
     },
   },

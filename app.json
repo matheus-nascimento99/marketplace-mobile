@@ -32,6 +32,13 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O app acessa sua galeria para você conseguir adicionar imagem ao seu perfil."
+        }
       ]
     ],
     "experiments": {
