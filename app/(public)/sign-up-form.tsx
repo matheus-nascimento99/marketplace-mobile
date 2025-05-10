@@ -27,7 +27,7 @@ import { Button } from '@/components/ui/button'
 import * as Input from '@/components/ui/input'
 import { AppError } from '@/errors/app-error'
 import { useAuth } from '@/hooks/use-auth'
-import { uploadAttachment } from '@/services/upload-attachment'
+import { uploadAttachmentService } from '@/services/upload-attachment'
 import { formatPhoneNumber } from '@/utils/format-phone-number'
 
 // Sign in schema validation
@@ -155,7 +155,7 @@ export const SignUpForm = () => {
     }
 
     try {
-      const { attachments } = await uploadAttachment({
+      const { attachments } = await uploadAttachmentService({
         attachment: result.assets[0],
       })
 
@@ -180,7 +180,7 @@ export const SignUpForm = () => {
     <View className="mt-8.5 gap-10">
       <View className="gap-5">
         <Pressable
-          className="bg-shape size-30 m-auto flex items-center justify-center overflow-hidden rounded-xl"
+          className="m-auto flex size-30 items-center justify-center overflow-hidden rounded-xl bg-shape"
           onPress={pickImage}
         >
           {image ? (

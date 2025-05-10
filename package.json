@@ -29,6 +29,7 @@
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
+    "@tanstack/react-query": "^5.75.7",
     "axios": "^1.9.0",
     "babel-plugin-module-resolver": "^5.0.2",
     "expo": "~52.0.46",
@@ -36,6 +37,7 @@
     "expo-constants": "~17.0.8",
     "expo-font": "~13.0.4",
     "expo-haptics": "~14.0.1",
+    "expo-image-picker": "~16.0.6",
     "expo-linking": "~7.0.5",
     "expo-router": "~4.0.21",
     "expo-splash-screen": "~0.29.24",
@@ -60,8 +62,7 @@
     "tailwind-merge": "^3.2.0",
     "tailwind-variants": "^1.0.0",
     "tailwindcss": "^3.4.17",
-    "zod": "^3.24.4",
-    "expo-image-picker": "~16.0.6"
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

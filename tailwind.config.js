@@ -58,6 +58,7 @@ module.exports = {
         danger: 'var(--color-danger)',
         success: 'var(--color-success)',
         shape: 'var(--color-shape)',
+        back: 'var(--color-background)',
         warning: {
           0: 'rgb(var(--color-warning-0)/<alpha-value>)',
           50: 'rgb(var(--color-warning-50)/<alpha-value>)',

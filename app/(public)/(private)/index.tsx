@@ -1,9 +1,11 @@
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
+
+import { Header } from './header'
 
 export default function Products() {
   return (
-    <View className="flex-1 items-center justify-center px-10 py-16">
-      <Text>Products</Text>
+    <View className="flex-1">
+      <Header />
     </View>
   )
 }

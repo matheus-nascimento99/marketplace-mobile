@@ -13,7 +13,7 @@ type UploadAttachmentServiceResponse = {
   }[]
 }
 
-export const uploadAttachment = async ({
+export const uploadAttachmentService = async ({
   attachment,
 }: UploadAttachmentServiceRequest) => {
   const file = {

@@ -1,6 +1,7 @@
 import '@/global.css'
 import '@/components/nativewind-interop'
 
+import { QueryClientProvider } from '@tanstack/react-query'
 import { useFonts } from 'expo-font'
 import { Slot } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
@@ -9,6 +10,7 @@ import FlashMessage from 'react-native-flash-message'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider'
+import { queryClient } from '@/lib/tanstack-query'
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -29,10 +31,12 @@ export default function RootLayout() {
 
   return (
     <GluestackUIProvider mode="light">
-      <SafeAreaView className="flex-1 bg-white">
-        <Slot />
-        <FlashMessage position="top" floating />
-      </SafeAreaView>
+      <QueryClientProvider client={queryClient}>
+        <SafeAreaView className="bg-back flex-1">
+          <Slot />
+          <FlashMessage position="top" floating />
+        </SafeAreaView>
+      </QueryClientProvider>
     </GluestackUIProvider>
   )
 }

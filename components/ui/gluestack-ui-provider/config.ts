@@ -69,6 +69,9 @@ export const config = {
     '--color-orange-base': '#F24D0D',
     '--color-orange-dark': '#C43C08',
 
+    /* Custom new background color */
+    '--color-back': '#FBF4F4',
+
     /* Warning */
     '--color-warning-0': '255 249 245',
     '--color-warning-50': '255 244 236',

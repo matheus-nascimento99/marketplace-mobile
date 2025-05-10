@@ -7,12 +7,14 @@ const button = tv({
     variant: {
       solid: 'bg-orange-base',
       outline: 'bg-transparent border border-orange-base',
+      link: 'bg-transparent items-center gap-2',
     },
     size: {
       md: 'py-4 px-5',
       sm: 'py-2.2 px-4',
       xs: 'p-4',
       '2xs': 'p-2.2',
+      link: 'p-0.5',
     },
   },
   compoundVariants: [
