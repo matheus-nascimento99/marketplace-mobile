@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router'
 import { useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import {
+  ActivityIndicator,
   Image,
   Pressable,
   Text,
@@ -392,7 +393,11 @@ export const SignUpForm = () => {
           <Text className="font-label text-action-md leading-snug text-white">
             {isSubmitting ? 'Carregando...' : 'Cadastrar'}
           </Text>
-          <ArrowRight02Icon className="stroke-white" />
+          {isSubmitting ? (
+            <ActivityIndicator color="white" size={24} />
+          ) : (
+            <ArrowRight02Icon className="stroke-white" />
+          )}
         </Button>
       </View>
     </View>

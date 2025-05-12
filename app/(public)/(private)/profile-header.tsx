@@ -26,12 +26,21 @@ export const ProfileHeader = () => {
           <SkeletonText _lines={2} gap={2} className="h-2 w-2/5" />
         </View>
       ) : (
-        <View className="flex flex-row items-center gap-5">
-          <Image
-            src="https://github.com/matheus-nascimento99.png"
-            className="size-14 rounded-xl"
-            alt=""
-          />
+        <View className="flex flex-row items-center justify-center gap-5">
+          {profile.seller.avatar ? (
+            <Image
+              src={profile.seller.avatar.url}
+              className="size-14 rounded-xl"
+              alt=""
+            />
+          ) : (
+            <Text>
+              {profile.seller.name.split(' ')[0].charAt(0)}
+              {profile.seller.name.split(' ').length > 1
+                ? profile.seller.name.split(' ')[1].charAt(0)
+                : ''}
+            </Text>
+          )}
 
           <View className="flex-1 space-y-1">
             <Text

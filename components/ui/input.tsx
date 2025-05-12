@@ -11,7 +11,7 @@ export const Root = ({
   ...props
 }: RootProps & { className?: string }) => {
   return (
-    <View className="group flex flex-col" {...props}>
+    <View className="group flex flex-1 flex-col" {...props}>
       {children}
     </View>
   )
@@ -65,7 +65,7 @@ export const ControlInput = forwardRef<TextInput, TextInputProps>(
       <TextInput
         ref={ref}
         className={twMerge(
-          'w-full text-[16px] text-gray-400 placeholder:text-gray-200 focus:caret-orange-base focus:outline-none',
+          'flex-1 text-[16px] text-gray-400 placeholder:text-gray-200 focus:caret-orange-base focus:outline-none',
           className,
         )}
         style={style}

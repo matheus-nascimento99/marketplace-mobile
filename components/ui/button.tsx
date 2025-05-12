@@ -5,8 +5,9 @@ const button = tv({
   base: 'flex flex-row rounded-card items-center',
   variants: {
     variant: {
-      solid: 'bg-orange-base',
-      outline: 'bg-transparent border border-orange-base',
+      solid:
+        'bg-orange-base disabled:bg-orange-dark disabled:opacity-50 flex-1',
+      outline: 'bg-transparent border border-orange-base flex-1',
       link: 'bg-transparent items-center gap-2',
     },
     size: {
@@ -23,8 +24,8 @@ const button = tv({
       class: 'h-14 justify-between',
     },
     {
-      size: ['md', 'xs'],
-      class: 'h-14',
+      size: ['sm', '2xs'],
+      class: 'h-10 justify-center',
     },
   ],
   defaultVariants: {

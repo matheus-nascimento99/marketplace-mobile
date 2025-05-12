@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router'
 
-import { AuthContextProvider } from '@/contexts/auth-context'
+import { AuthContextProvider } from '@/contexts/auth'
 
 export default function PublicLayout() {
   return (

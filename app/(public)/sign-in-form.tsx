@@ -2,7 +2,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'expo-router'
 import { useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { showMessage } from 'react-native-flash-message'
 import { z } from 'zod'
 
@@ -156,7 +162,11 @@ export const SignInForm = () => {
         <Text className="font-label text-action-md leading-snug text-white">
           {isSubmitting ? 'Carregando...' : 'Acessar'}
         </Text>
-        <ArrowRight02Icon className="stroke-white" />
+        {isSubmitting ? (
+          <ActivityIndicator color="white" size={24} />
+        ) : (
+          <ArrowRight02Icon className="stroke-white" />
+        )}
       </Button>
     </View>
   )
