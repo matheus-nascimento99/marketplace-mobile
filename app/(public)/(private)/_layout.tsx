@@ -62,6 +62,13 @@ export default function PrivateLayout() {
           },
         }}
       />
+      <Tabs.Screen
+        name="product"
+        options={{
+          href: null,
+          tabBarStyle: { display: 'none' },
+        }}
+      />
     </Tabs>
   )
 }

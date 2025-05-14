@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router'
 import { Image, Pressable, Text, View } from 'react-native'
 
 import { Product } from '@/dtos/product'
@@ -7,8 +8,16 @@ type ProductCardProps = {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
+  // Expo router hook for use in navigation
+  const router = useRouter()
+
   return (
-    <Pressable className="w-full rounded-lg bg-white p-1">
+    <Pressable
+      className="w-full rounded-lg bg-white p-1"
+      onPress={() =>
+        router.navigate(`/(public)/(private)/product/${product.id}`)
+      }
+    >
       <Image
         src={product.attachments[0].url.replace('localhost', '192.168.1.13')}
         alt="Product image"
