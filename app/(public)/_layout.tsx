@@ -9,6 +9,9 @@ export default function PublicLayout() {
         screenOptions={{
           headerShown: false,
           contentStyle: { backgroundColor: 'transparent' },
+          statusBarAnimation: 'fade',
+          statusBarTranslucent: true,
+          statusBarStyle: 'dark',
         }}
       >
         <Stack.Screen name="index" />

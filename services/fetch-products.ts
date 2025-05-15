@@ -39,7 +39,7 @@ export const fetchProductsService = async ({
     params.append('category_id', categoryId)
   }
 
-  const { data } = await api.get<FetchProductsServiceResponse>('/products/me', {
+  const { data } = await api.get<FetchProductsServiceResponse>('/products', {
     params,
   })
 

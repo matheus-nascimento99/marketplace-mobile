@@ -6,6 +6,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { useFonts } from 'expo-font'
 import { Slot } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
+import { StatusBar } from 'expo-status-bar'
 import { useEffect } from 'react'
 import FlashMessage from 'react-native-flash-message'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -35,6 +36,7 @@ export default function RootLayout() {
     <GluestackUIProvider mode="light">
       <QueryClientProvider client={queryClient}>
         <SafeAreaView className="flex-1 bg-back">
+          <StatusBar style="dark" backgroundColor="transparent" translucent />
           <GestureHandlerRootView className="flex-1">
             <PortalProvider>
               <Slot />
