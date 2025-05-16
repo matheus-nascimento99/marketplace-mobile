@@ -15,7 +15,7 @@ export default function PrivateLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="products"
         options={{
           title: 'Produtos',
           tabBarIcon: (state) => {

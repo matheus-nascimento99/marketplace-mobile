@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
 import * as ImagePicker from 'expo-image-picker'
 import { useRouter } from 'expo-router'
 import { useRef, useState } from 'react'
@@ -26,32 +27,97 @@ import ViewIcon from '@/assets/icons/view'
 import ViewOffIcon from '@/assets/icons/view-off'
 import { Button } from '@/components/ui/button'
 import * as Input from '@/components/ui/input'
+import { Seller } from '@/dtos/seller'
+import { env } from '@/env'
 import { AppError } from '@/errors/app-error'
 import { useAuth } from '@/hooks/use-auth'
+import { editUserService } from '@/services/edit-user'
 import { uploadAttachmentService } from '@/services/upload-attachment'
 import { formatPhoneNumber } from '@/utils/format-phone-number'
 
-// Sign in schema validation
-const signUpSchema = z
+type SignUpProps = {
+  profile?: Seller
+}
+
+// Common fields for both schemas
+const commonFields = {
+  name: z
+    .string()
+    .trim()
+    .min(1, 'Por favor, forneça seu nome completo')
+    .refine((value) => value.split(' ').length > 1, {
+      message: 'Por favor, forneça seu nome completo',
+    }),
+  phone: z.string().trim().min(1, 'Por favor, forneça seu telefone'),
+  email: z
+    .string()
+    .trim()
+    .min(1, 'Por favor, forneça seu e-mail')
+    .email('Por favor, forneça o e-mail no formato correto'),
+}
+
+// Schema for new users - passwords required
+const newUserSchema = z
   .object({
-    name: z.string().trim().min(1, 'Por favor, forneça seu nome completo'),
-    phone: z.string().trim().min(1, 'Por favor, forneça seu nome completo'),
-    email: z
+    ...commonFields,
+    password: z
       .string()
-      .trim()
-      .min(1, 'Por favor, forneça seu e-mail')
-      .email('Por favor, forneça o e-mail no formato correto'),
-    password: z.string().min(1, 'Por favor, forneça sua senha'),
-    passwordConfirmation: z.string().min(1, 'Por favor, forneça sua senha'),
+      .min(8, 'Por favor, forneça sua senha com no mínimo 8 caracteres'),
+    passwordConfirmation: z
+      .string()
+      .min(8, 'Por favor, forneça sua senha com no mínimo 8 caracteres'),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
     message: 'As senhas não coincidem',
     path: ['passwordConfirmation'],
   })
 
-type SignUpSchema = z.infer<typeof signUpSchema>
+// Schema for existing users - passwords optional
+const existingUserSchema = z
+  .object({
+    ...commonFields,
+    password: z
+      .string()
+      .min(8, 'Por favor, forneça sua senha com no mínimo 8 caracteres')
+      .optional()
+      .or(z.literal('')),
+    passwordConfirmation: z
+      .string()
+      .min(8, 'Por favor, forneça sua senha com no mínimo 8 caracteres')
+      .optional()
+      .or(z.literal('')),
+  })
+  .refine(
+    (data) => {
+      // If both fields are empty strings or undefined, validation passes
+      if (
+        (!data.password || data.password === '') &&
+        (!data.passwordConfirmation || data.passwordConfirmation === '')
+      ) {
+        return true
+      }
+      // Otherwise passwords must match
+      return data.password === data.passwordConfirmation
+    },
+    {
+      message: 'As senhas não coincidem',
+      path: ['passwordConfirmation'],
+    },
+  )
 
-export const SignUpForm = () => {
+// Type for form data based on whether we're editing a profile or creating a new user
+type NewUserSchema = z.infer<typeof newUserSchema>
+type ExistingUserSchema = z.infer<typeof existingUserSchema>
+
+export const SignUpForm = ({ profile }: SignUpProps) => {
+  // query client
+  const queryClient = useQueryClient()
+
+  // Form data type - depends on presence of profile
+  type FormData = typeof profile extends undefined
+    ? NewUserSchema
+    : ExistingUserSchema
+
   // Auth context
   const { signUp } = useAuth()
 
@@ -61,7 +127,11 @@ export const SignUpForm = () => {
     useState(false)
 
   // Image state
-  const [image, setImage] = useState<string | null>(null)
+  const [image, setImage] = useState<string | null>(
+    profile && profile.avatar
+      ? profile.avatar.url.replace('localhost', env.EXPO_PUBLIC_API_IP)
+      : null,
+  )
 
   // Attachment id state
   const [avatarId, setavatarId] = useState<string | null>(null)
@@ -72,48 +142,77 @@ export const SignUpForm = () => {
   const passwordInputRef = useRef<TextInput>(null)
   const passwordConfirmationInputRef = useRef<TextInput>(null)
 
-  // Use form react hook form
+  // Use form react hook form - use appropriate schema based on profile
   const {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+    resetField,
+  } = useForm<FormData>({
+    resolver: zodResolver(profile ? existingUserSchema : newUserSchema),
     defaultValues: {
-      name: '',
-      phone: '',
-      email: '',
+      name: profile ? profile.name : '',
+      phone: profile ? profile.phone : '',
+      email: profile ? profile.email : '',
       password: '',
       passwordConfirmation: '',
-    },
+    } as FormData,
   })
 
   // Expo router hook for use in navigation
   const router = useRouter()
 
   // On submit function
-  const onSubmit = async ({
-    name,
-    phone,
-    email,
-    password,
-    passwordConfirmation,
-  }: SignUpSchema) => {
+  const onSubmit = async (data: FormData) => {
     try {
-      await signUp({
-        email,
-        password,
-        name,
-        phone,
-        avatarId,
-        passwordConfirmation,
-      })
+      if (!profile) {
+        // For new users (using required password fields)
+        await signUp({
+          email: data.email,
+          // Safe cast because password is required for new users
+          password: data.password as string,
+          name: data.name,
+          phone: data.phone,
+          avatarId,
+          passwordConfirmation: data.passwordConfirmation as string,
+        })
+      } else {
+        // For existing users (passwords might be optional)
+        const userData: {
+          email: string
+          name: string
+          phone: string
+          avatarId: string | null
+          password?: string
+        } = {
+          email: data.email,
+          name: data.name,
+          phone: data.phone,
+          avatarId,
+        }
+
+        // Only include password if it's a non-empty string
+        if (data.password && data.password.trim() !== '') {
+          userData.password = data.password
+        }
+
+        await editUserService(userData)
+
+        resetField('password')
+        resetField('passwordConfirmation')
+      }
 
       showMessage({
         message: 'Sucesso',
-        description: 'Vendedor criado com sucesso!',
+        description: `Usuário ${profile ? 'atualizado' : 'criado'} com sucesso!`,
         type: 'success',
       })
+
+      if (profile) {
+        return queryClient.invalidateQueries({
+          queryKey: ['get-profile'],
+        })
+      }
 
       router.navigate('/(public)')
     } catch (error) {
@@ -121,7 +220,7 @@ export const SignUpForm = () => {
 
       const description = isAppError
         ? error.message
-        : 'Não foi possível realizar o login, tente novamente mais tarde'
+        : 'Não foi possível realizar esta ação, tente novamente mais tarde'
 
       showMessage({
         message: 'Erro',
@@ -201,7 +300,7 @@ export const SignUpForm = () => {
               control={control}
               render={({ field: { onChange, value } }) => (
                 <Input.ControlInput
-                  placeholder="Nome"
+                  placeholder="Nome completo"
                   autoFocus
                   onChangeText={onChange}
                   value={value}
@@ -390,13 +489,21 @@ export const SignUpForm = () => {
         </View>
 
         <Button disabled={isSubmitting} onPress={handleSubmit(onSubmit)}>
-          <Text className="font-label text-action-md leading-snug text-white">
-            {isSubmitting ? 'Carregando...' : 'Cadastrar'}
-          </Text>
-          {isSubmitting ? (
-            <ActivityIndicator color="white" size={24} />
+          {!profile ? (
+            <>
+              <Text className="font-label text-action-md leading-snug text-white">
+                {isSubmitting ? 'Carregando...' : 'Cadastrar'}
+              </Text>
+              {isSubmitting ? (
+                <ActivityIndicator color="white" size={24} />
+              ) : (
+                <ArrowRight02Icon className="stroke-white" />
+              )}
+            </>
           ) : (
-            <ArrowRight02Icon className="stroke-white" />
+            <Text className="m-auto text-center font-label text-action-md leading-snug text-white">
+              {isSubmitting ? 'Carregando...' : 'Atualizar cadastro'}
+            </Text>
           )}
         </Button>
       </View>

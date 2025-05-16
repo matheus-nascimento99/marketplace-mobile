@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router'
 import { Image, Pressable, Text, View } from 'react-native'
 
 import { Product } from '@/dtos/product'
+import { env } from '@/env'
 
 type ProductCardProps = {
   product: Product
@@ -19,7 +20,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       }
     >
       <Image
-        src={product.attachments[0].url.replace('localhost', '192.168.1.13')}
+        src={product.attachments[0].url.replace(
+          'localhost',
+          env.EXPO_PUBLIC_API_IP,
+        )}
         alt="Product image"
         className="h-24 w-full rounded-lg object-contain"
       />

@@ -2,12 +2,12 @@ import { useQuery } from '@tanstack/react-query'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useEffect } from 'react'
 import { Image, Linking, Platform, Text, View } from 'react-native'
-import { showMessage } from 'react-native-flash-message'
 
 import ArrowLeft02Icon from '@/assets/icons/arrow-left-02'
 import { Button } from '@/components/ui/button'
 import { Skeleton, SkeletonText } from '@/components/ui/skeleton'
 import { Product } from '@/dtos/product'
+import { env } from '@/env'
 import { getProductService } from '@/services/get-product'
 import { getViewsAmountInWeekService } from '@/services/get-views-amount-in-week'
 import { registerProductViewService } from '@/services/register-product-view'
@@ -35,7 +35,7 @@ export default function ProductDetails() {
   })
 
   // get views amount in week query
-  const { data: viewAmountInWeekData } = useQuery({
+  const { data: viewAmountInWeekData, refetch } = useQuery({
     queryKey: ['get-views-amount-in-week', productId],
     queryFn: () =>
       getViewsAmountInWeekService({
@@ -45,7 +45,7 @@ export default function ProductDetails() {
 
   // register view when access product page
   useEffect(() => {
-    registerProductViewService({ productId })
+    registerProductViewService({ productId }).then(() => refetch())
   }, [productId])
 
   // function do handle contact button click
@@ -87,7 +87,7 @@ export default function ProductDetails() {
             <Image
               src={productData.product.attachments[0].url.replace(
                 'localhost',
-                '192.168.1.13',
+                env.EXPO_PUBLIC_API_IP,
               )}
               className="h-[197px] w-full rounded-md"
               alt="Product image"

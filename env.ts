@@ -11,6 +11,7 @@ const envSchema = z.object({
     .string()
     .min(1, 'Por favor, forneça a url da api')
     .url('Por favor, forneça a url da api no formato correto'),
+  EXPO_PUBLIC_API_IP: z.string().ip().min(1, 'Por favor, forneça o ip da api'),
 })
 
 const _env = envSchema.safeParse(process.env)

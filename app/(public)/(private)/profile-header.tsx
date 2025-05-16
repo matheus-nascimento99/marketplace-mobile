@@ -5,6 +5,7 @@ import { Image, Text, View } from 'react-native'
 import { ArrowRight02Icon } from '@/assets/icons/arrow-right-02'
 import { Button } from '@/components/ui/button'
 import { Skeleton, SkeletonText } from '@/components/ui/skeleton'
+import { env } from '@/env'
 import { getProfileService } from '@/services/get-profile'
 
 export const ProfileHeader = () => {
@@ -29,7 +30,10 @@ export const ProfileHeader = () => {
         <View className="flex flex-row items-center justify-center gap-5">
           {profile.seller.avatar ? (
             <Image
-              src={profile.seller.avatar.url}
+              src={profile.seller.avatar.url.replace(
+                'localhost',
+                env.EXPO_PUBLIC_API_IP,
+              )}
               className="size-14 rounded-xl"
               alt=""
             />

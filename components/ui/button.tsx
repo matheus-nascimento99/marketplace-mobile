@@ -24,7 +24,7 @@ const button = tv({
       class: 'h-14 justify-between',
     },
     {
-      size: ['sm', '2xs'],
+      size: ['sm'],
       class: 'h-10 justify-center',
     },
   ],

@@ -217,6 +217,12 @@ module.exports = {
       size: {
         30: '120px',
       },
+      width: {
+        30: '120px',
+      },
+      height: {
+        30: '120px',
+      },
     },
   },
   plugins: [gluestackPlugin],

@@ -65,7 +65,7 @@ export const SignInForm = () => {
     try {
       await signIn({ email, password })
 
-      router.navigate('/(public)/(private)')
+      router.replace('/(public)/(private)/products')
     } catch (error) {
       const isAppError = error instanceof AppError
 

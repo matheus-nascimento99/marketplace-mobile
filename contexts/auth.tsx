@@ -1,18 +1,24 @@
+import { useRouter } from 'expo-router'
 import { createContext, ReactNode } from 'react'
 
 import { api } from '@/lib/api'
 import { SignInRequest, signInService } from '@/services/sign-in'
 import { SignUpRequest, signUpService } from '@/services/sign-up'
+import { removeStorageItem } from '@/storage/remove-item'
 import { setStorageItem } from '@/storage/set-item'
 
 type AuthContextType = {
   signIn: (props: SignInRequest) => Promise<void>
+  signOut: () => Promise<void>
   signUp: (props: SignUpRequest) => Promise<void>
 }
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
+  // Expo router hook for use in navigation
+  const router = useRouter()
+
   const signIn = async ({ email, password }: SignInRequest) => {
     try {
       const { accessToken } = await signInService({ email, password })
@@ -22,6 +28,17 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       setTokenInDefaultHeaders(accessToken)
     } catch (error) {
       console.error('Erro ao realizar login', error)
+      throw error
+    }
+  }
+
+  const signOut = async () => {
+    try {
+      await removeFromStorage('access_token')
+
+      router.replace('/(public)')
+    } catch (error) {
+      console.error('Erro ao remover token do async storage', error)
       throw error
     }
   }
@@ -44,7 +61,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         avatarId,
       })
     } catch (error) {
-      console.error('Erro ao realizar cadastro do vendedor', error)
+      console.error('Erro ao realizar cadastro do usuário', error)
       throw error
     }
   }
@@ -58,12 +75,21 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
+  const removeFromStorage = async (key: string) => {
+    try {
+      await removeStorageItem(key)
+    } catch (error) {
+      console.error('Erro ao remover token no async storage')
+      throw error
+    }
+  }
+
   const setTokenInDefaultHeaders = (token: string) => {
     api.defaults.headers.common.Authorization = token
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, signUp }}>
+    <AuthContext.Provider value={{ signIn, signOut, signUp }}>
       {children}
     </AuthContext.Provider>
   )
