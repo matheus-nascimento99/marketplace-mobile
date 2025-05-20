@@ -13,6 +13,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider'
+import { AuthContextProvider } from '@/contexts/auth'
 import { queryClient } from '@/lib/tanstack-query'
 
 export default function RootLayout() {
@@ -35,15 +36,17 @@ export default function RootLayout() {
   return (
     <GluestackUIProvider mode="light">
       <QueryClientProvider client={queryClient}>
-        <SafeAreaView className="flex-1 bg-back">
-          <StatusBar style="dark" backgroundColor="transparent" translucent />
-          <GestureHandlerRootView className="flex-1">
-            <PortalProvider>
-              <Slot />
-              <FlashMessage position="top" floating />
-            </PortalProvider>
-          </GestureHandlerRootView>
-        </SafeAreaView>
+        <AuthContextProvider>
+          <SafeAreaView className="flex-1 bg-back">
+            <StatusBar style="dark" backgroundColor="transparent" translucent />
+            <GestureHandlerRootView className="flex-1">
+              <PortalProvider>
+                <Slot />
+                <FlashMessage position="top" floating />
+              </PortalProvider>
+            </GestureHandlerRootView>
+          </SafeAreaView>
+        </AuthContextProvider>
       </QueryClientProvider>
     </GluestackUIProvider>
   )
