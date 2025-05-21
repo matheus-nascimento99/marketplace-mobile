@@ -39,6 +39,8 @@ export const fetchProductsService = async ({
     params.append('category_id', categoryId)
   }
 
+  params.append('status', 'available')
+
   const { data } = await api.get<FetchProductsServiceResponse>('/products', {
     params,
   })
