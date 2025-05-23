@@ -62,7 +62,7 @@ export const ProductsFilterBottomSheet = () => {
   const finalPriceRef = useRef<TextInput>(null)
 
   // variables
-  const snapPoints = useMemo(() => ['50%'], [])
+  const snapPoints = useMemo(() => ['78%'], [])
 
   // callbacks
   const handlePresentPress = useCallback(() => {

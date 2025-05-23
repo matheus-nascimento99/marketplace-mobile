@@ -75,7 +75,11 @@ export default function ProductDetails() {
   return (
     <View className="flex-1">
       <View className="mt-9 px-4">
-        <Button variant="link" size="link" onPress={() => router.back()}>
+        <Button
+          variant="link"
+          size="link"
+          onPress={() => router.replace('/(public)/(private)/products')}
+        >
           <ArrowLeft02Icon className="size-5 stroke-orange-base" />
           <Text className="font-label text-action-sm leading-tight text-orange-base">
             Voltar
