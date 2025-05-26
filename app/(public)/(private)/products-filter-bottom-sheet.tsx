@@ -264,7 +264,7 @@ export const ProductsFilterBottomSheet = () => {
             </View>
             <View className="mt-auto flex flex-row gap-3">
               <Button variant="outline" size="sm" onPress={handleResetForm}>
-                <Text className="font-label text-action-sm leading-tight text-orange-base">
+                <Text className="font-label text-action-sm leading-none text-orange-base">
                   Limpar filtro
                 </Text>
               </Button>

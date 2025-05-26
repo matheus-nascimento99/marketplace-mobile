@@ -233,10 +233,15 @@ export const SignUpForm = ({ profile }: SignUpProps) => {
   // Image picker function
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
-    const userPermission = await ImagePicker.getMediaLibraryPermissionsAsync()
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
 
-    if (!userPermission.granted) {
-      return
+    if (status !== 'granted') {
+      return showMessage({
+        message: 'Atenção',
+        description:
+          'Para escolher o avatar, precisamos de acesso à sua galeria. Habilite a permissão em Ajustes.',
+        type: 'warning',
+      })
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
